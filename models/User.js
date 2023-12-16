@@ -39,12 +39,6 @@ const userSchema = new mongoose.Schema({
             message: props => `${props.value} is not a valid mobile number!`
         }
     },
-    wallet: {
-        balance: {
-            type: Number,
-            default: 0
-        }
-    }
 }, {
     timestamps: true
 });

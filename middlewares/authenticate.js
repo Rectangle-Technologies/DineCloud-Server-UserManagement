@@ -7,6 +7,15 @@ const { UserNotFoundException } = require('../exceptions/UserException');
 
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
+        // get whole url from request
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        const url = fullUrl.split('?')[0];
+
+        // by pass authentication for login/register routes
+        if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register")) {
+            return next();
+        }
+        
         const token = req.header('Authorization')?.replace('Bearer ', '');
         
         if (!token) {
