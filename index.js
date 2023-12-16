@@ -10,6 +10,7 @@ const path = require('path');
 const cors = require('cors');
 const cluster = require('cluster');
 const JSONschemaCore = require('./models/JSONschemaCore');
+const authenticateUserMiddleware = require('./middlewares/authenticate');
 
 // configuring dotenv
 require('dotenv').config();
@@ -38,6 +39,7 @@ var generatedRoutes = {}
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/api', authenticateUserMiddleware);
 
 const routers = require('./routers');
 
