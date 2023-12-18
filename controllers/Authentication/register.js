@@ -4,25 +4,21 @@ const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
 const { UserAlreadyExistsError } = require('../../exceptions/UserException');
 const User = require('../../models/User');
 const { successResponse, errorResponse } = require('../../utils/response.js');
+const { generateClientCode } = require('../../utils/generateClientCode.js');
 
 const RegisterUser = async (req, res) => {
-    // getting data from request body
-    const data = req.body;
+    try {
+        const data = req.body;
+        data.code = generateClientCode().toUpperCase();
 
-    // creating new user
-    const user = new User(data);
-
-    // saving user in database
-    const u = await user.save();
-
-    // creating jwt token with user id, email, expiry time
-    const token = jwt.sign({ _id: u._id, email: u.email }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
-
-    // removing hashed password from user object
-    u.hashedPassword = "Encrypted";
-
-    // sending success response
-    successResponse(res, { user: u, token }, 200);
+        const user = new User(data);
+        const u = await user.save();
+        const token = jwt.sign({ _id: u._id, email: u.email }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
+        u.hashedPassword = "Encrypted";
+        successResponse(res, { user: u, token }, 200);
+    } catch (error) {
+        errorResponse(res, error, error.statusCode || 400);
+    }
 }
 
 const RegisterUserValidation = async (req, res, next) => {
