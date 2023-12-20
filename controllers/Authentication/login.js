@@ -19,7 +19,7 @@ const LoginUser = async (req, res) => {
         if (!isPasswordCorrect) {
             throw new InvalidCredentialsException(INVALID_CREDENTIALS);
         }
-        const token = jwt.sign({ _id: user._id, email: user.email }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
+        const token = jwt.sign({ _id: user._id, email: user.email, clientId: user.clientId, clientCode: user.clientCode }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
         user.hashedPassword = REPLACE_PASSWORD_TEXT;
 
         successResponse(res, { user, token }, 200);

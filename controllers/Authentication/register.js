@@ -13,7 +13,7 @@ const RegisterUser = async (req, res) => {
 
         const user = new User(data);
         const u = await user.save();
-        const token = jwt.sign({ _id: u._id, email: u.email }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
+        const token = jwt.sign({ _id: u._id, email: u.email, clientId: user.clientId, clientCode: user.clientCode }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
         u.hashedPassword = "Encrypted";
         successResponse(res, { user: u, token }, 200);
     } catch (error) {
