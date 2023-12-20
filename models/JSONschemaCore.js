@@ -24,6 +24,14 @@ const jsonSchemaCoreSchema = new mongoose.Schema({
     metadata: {
         type: Object,
         required: false
+    },
+    clientId: {
+        type: String,
+        required: true
+    },
+    clientCode: {
+        type: String,
+        required: true
     }
 });
 

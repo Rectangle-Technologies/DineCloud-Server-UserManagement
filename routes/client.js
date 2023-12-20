@@ -7,7 +7,7 @@ const routesConfig = [
         controller: createNewClient,
         middleware: [],
         inputSchema: {
-            key: 'UserAPI',
+            key: 'CreateClientAPI',
             version: '1'
         },
         description: 'Create new client'

@@ -8,7 +8,7 @@ const routesConfig = [
         controller: LoginUser,
         middleware: [LoginUserValidation],
         inputSchema: {
-            key: 'UserAPI',
+            key: 'LoginAPI',
             version: '1'
         },
         description: 'Login user'
@@ -19,7 +19,7 @@ const routesConfig = [
         controller: RegisterUser,
         middleware: [RegisterUserValidation],
         inputSchema: {
-            key: 'UserAPI',
+            key: 'RegisterAPI',
             version: '1'
         },
         description: 'Register user'

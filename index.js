@@ -11,6 +11,7 @@ const cors = require('cors');
 const cluster = require('cluster');
 const JSONschemaCore = require('./models/JSONschemaCore');
 const authenticateUserMiddleware = require('./middlewares/authenticate');
+const { validateSchemaMiddleware } = require('./middlewares/validateBodyData');
 
 // configuring dotenv
 require('dotenv').config();
@@ -40,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/api', authenticateUserMiddleware);
+app.use('/api', validateSchemaMiddleware(generatedSchema, generatedRoutes))
 
 const routers = require('./routers');
 
@@ -49,10 +51,14 @@ async function createRoutes (route, Router) {
     const schemaIdentifier = `${schemaKey}_${version}`;
 
     if (process.env.FEATURE_API_INPUT_SCHEMA_VALIDATION === 'true') {
-        const schemaResponse = await JSONschemaCore.findOne({ key: schemaKey, version: version });
+        const schemaResponse = await JSONschemaCore.find({ key: schemaKey, version: version });
 
         if (!generatedSchema[schemaIdentifier]) {
-            generatedSchema[schemaIdentifier] = schemaResponse.schema;
+            let transformedJson = {};
+            schemaResponse.forEach(item => {
+                transformedJson[item.clientCode] = item;
+            });
+            generatedSchema[schemaIdentifier] = transformedJson;
         }
         
         if (!schemaResponse) {
