@@ -28,33 +28,4 @@ const LoginUser = async (req, res) => {
     }
 };
 
-const LoginUserValidation = async (req, res, next) => {
-    try {
-        // validating request body
-        const data = req.body;
-
-        // checking if all required fields are present
-        const emailRegex = EMAIL_REGEX;
-        if (!data.email || data.email === '') {
-            throw new EmailIsRequiredException();
-        }
-        // check if email is valid using regex
-        
-        if (!emailRegex.test(data.email)) {
-            throw new EmailIsNotValidException();
-        }
-
-        // checking if password is present
-        if (!data.password || data.password === '') {
-            throw new PasswordIsRequiredException();
-        }
-
-        // calling next middleware
-        next();
-    } catch (error) {
-        // sending error response
-        errorResponse(res, error.message, error.statusCode);
-    }
-};
-
-module.exports = { LoginUser, LoginUserValidation };
+module.exports = { LoginUser };

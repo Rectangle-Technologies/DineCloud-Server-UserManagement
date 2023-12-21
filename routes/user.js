@@ -1,12 +1,12 @@
-const { LoginUser, LoginUserValidation } = require("../controllers/Authentication/login");
-const { RegisterUser, RegisterUserValidation } = require("../controllers/Authentication/register");
+const { LoginUser } = require("../controllers/Authentication/login");
+const { RegisterUser } = require("../controllers/Authentication/register");
 
 const routesConfig = [
     {
         method: 'post',
         path: '/login',
         controller: LoginUser,
-        middleware: [LoginUserValidation],
+        middleware: [],
         inputSchema: {
             key: 'LoginAPI',
             version: '1'
@@ -17,7 +17,7 @@ const routesConfig = [
         method: 'post',
         path: '/register',
         controller: RegisterUser,
-        middleware: [RegisterUserValidation],
+        middleware: [],
         inputSchema: {
             key: 'RegisterAPI',
             version: '1'

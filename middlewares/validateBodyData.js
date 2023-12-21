@@ -17,7 +17,7 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
             const schemaIdentifier = `${schemaKey}_${version}`;
 
             // get whole url from request
-            const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+            const fullUrl = req.originalUrl;
             const url = fullUrl.split('?')[0];
             if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create")) {
                 req.user = {

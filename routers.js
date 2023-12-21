@@ -10,6 +10,10 @@ const routers = [
     {
         path: '/api/client',
         router: require('./routes/client')
+    },
+    {
+        path: "/api/developer",
+        router: require("./routes/developer")
     }
 ];
 
