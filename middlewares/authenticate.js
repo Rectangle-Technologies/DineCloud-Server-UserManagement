@@ -4,6 +4,7 @@ const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
 const User = require('../models/User');
 const { TokenNotProvidedException, TokenNotValidException } = require('../exceptions/Base');
 const { UserNotFoundException } = require('../exceptions/UserException');
+const { getModelDataById } = require('../utils/interServerComms');
 
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
@@ -15,23 +16,20 @@ const authenticateUserMiddleware = async (req, res, next) => {
         if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create")) {
             return next();
         }
-        
         const token = req.header('Authorization')?.replace('Bearer ', '');
-        
         if (!token) {
             throw new TokenNotProvidedException();
         }
         
         if (jwt.verify(token)) {
             const decoded = jwt.decode(token);
-            
-            const user = await User.findById(decoded?._id)
-            
-            if (user == null || user == undefined || user == '') {
+            const response = await getModelDataById('User', decoded._id, token);
+            const user = response.data.data;
+            if (!user.length) {
                 throw new UserNotFoundException();
             }
             
-            req.user = user;
+            req.user = user[0].User;
             req.token = token;
             
         } else {

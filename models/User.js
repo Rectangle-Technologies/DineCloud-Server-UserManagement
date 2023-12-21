@@ -4,55 +4,44 @@ const emailValidator = require('../utils/emailValidator');
 
 // schema for user
 const userSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        trim: true,
+    "firstName": {
+        "type": "string",
+        "required": true,
+        "trim": true,
     },
-    lastName: {
-        type: String,
-        required : true,
-        trim: true,
+    "lastName": {
+        "type": "string",
+        "required" : true,
+        "trim": true,
     },
-    clientId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Client'
+    "clientId": {
+        "type": "string",
+        "required": true,
+        "ref": 'Client'
     },
-    clientCode:{
-        type: String,
-        required: true,
-        trim: true
+    "clientCode":{
+        "type": "string",
+        "required": true,
+        "trim": true
     },
-    code: {
-        type: String,
-        required: true,
-        trim: true,
+    "code": {
+        "type": "string",
+        "required": true,
+        "trim": true,
     },
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        validate: {
-            validator: emailValidator,
-            message: props => `${props.value} is not a valid email address!}`
-        }
+    "email": {
+        "type": "string",
+        "required": true,
+        "trim": true
     },
-    hashedPassword: {
-        type: String,
-        required: true,
-        trim: true
+    "hashedPassword": {
+        "type": "string",
+        "required": true,
+        "trim": true
     },
-    mobileNumber: {
-        type: String,
-        trim: true,
-        validate: {
-            validator: (number) => {
-                const numberRegex = /^\d{10}$/;
-                return numberRegex.test(number);
-            },
-            message: props => `${props.value} is not a valid mobile number!`
-        }
+    "mobileNumber": {
+        "type": "string",
+        "trim": true
     },
 }, {
     timestamps: true
