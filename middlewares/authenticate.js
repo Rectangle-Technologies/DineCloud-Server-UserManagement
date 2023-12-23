@@ -11,7 +11,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
         const url = req.originalUrl;
 
         // by pass authentication for login/register routes
-        if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create") || url.endsWith("/api/developer/loginDev")) {
+        if (url.endsWith("/api/user/login") || url.endsWith("/api/client/create") || url.endsWith("/api/developer/loginDev")) {
             return next();
         }
         const token = req.header('Authorization')?.replace('Bearer ', '');
