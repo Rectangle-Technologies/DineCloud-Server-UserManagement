@@ -3,15 +3,16 @@ const bcrypt = require('bcryptjs');
 const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
 const { InvalidCredentialsException } = require('../../exceptions/Base');
 const { UserNotFoundException, EmailIsRequiredException, EmailIsNotValidException, PasswordIsRequiredException } = require('../../exceptions/UserException');
-const User = require('../../models/User');
 const { successResponse, errorResponse } = require('../../utils/response.js');
 const { INVALID_CREDENTIALS } = require('../../constants/message/error');
 const { REPLACE_PASSWORD_TEXT, EMAIL_REGEX } = require('../../constants/message/utils');
+const { getModelDataByFilter } = require('../../utils/interServerComms.js');
 
 const LoginUser = async (req, res) => {
     const data = req.body;
-    const user = await User.findOne({ email: data.email });
     try {
+        const response = await getModelDataByFilter('User', { email: data?.email }, req.token);
+        const user = response.data.data.length ? response.data.data[0]?.User.length ? response.data.data[0].User[0] : null : null;
         if (!user) {
             throw new UserNotFoundException(INVALID_CREDENTIALS);
         }

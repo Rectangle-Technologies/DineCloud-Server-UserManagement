@@ -28,6 +28,7 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
             var schemaResponse = generatedSchema[schemaIdentifier][req.user.clientCode];
 
             if (!generatedSchema[schemaIdentifier][req.user.clientCode]) {
+                console.log(generatedSchema[schemaIdentifier])
                 schemaResponse = (await JSONschemaCore.findOne({ key: schemaKey, version: version, clientCode: req.user.clientCode })).schema;
             }
 

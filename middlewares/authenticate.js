@@ -1,7 +1,6 @@
 // importing libraries
 const { successResponse, errorResponse } = require('../utils/response');
 const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
-const User = require('../models/User');
 const { TokenNotProvidedException, TokenNotValidException } = require('../exceptions/Base');
 const { UserNotFoundException } = require('../exceptions/UserException');
 const { getModelDataById } = require('../utils/interServerComms');
