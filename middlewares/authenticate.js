@@ -8,8 +8,7 @@ const { getModelDataById } = require('../utils/interServerComms');
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
         // get whole url from request
-        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-        const url = fullUrl.split('?')[0];
+        const url = req.originalUrl;
 
         // by pass authentication for login/register routes
         if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create") || url.endsWith("/api/developer/loginDev")) {
