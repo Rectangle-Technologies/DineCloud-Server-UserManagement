@@ -24,12 +24,12 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
                     clientCode: process.env.BASE_CLIENT_CODE
                 }
             }
+            console.log(generatedSchema[schemaIdentifier])
 
             var schemaResponse = generatedSchema[schemaIdentifier][req.user.clientCode];
 
             if (!generatedSchema[schemaIdentifier][req.user.clientCode]) {
-                console.log(generatedSchema[schemaIdentifier])
-                schemaResponse = (await JSONschemaCore.findOne({ key: schemaKey, version: version, clientCode: req.user.clientCode })).schema;
+                schemaResponse = (await JSONschemaCore.findOne({ key: schemaKey, version: version, clientCode: req.user.clientCode }))?.schema;
             }
 
             const data = req.body;

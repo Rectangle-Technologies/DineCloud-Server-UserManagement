@@ -8,8 +8,7 @@ const successResponse = (res, data, message) => {
     });
 };
 
-const errorResponse = (res, error, statuscode, data={}) => {
-    console.log(error);
+const errorResponse = (res, error, statuscode, data = {}) => {
     return res.status(statuscode).json({
         status: 'error',
         message: error.message,
