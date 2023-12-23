@@ -8,28 +8,40 @@ const { getModelDataById } = require('../utils/interServerComms');
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
         // get whole url from request
-        const url = req.originalUrl;
+        const url = req.originalUrl.split('?')[0];
 
         // by pass authentication for login/register routes
-        if (url.endsWith("/api/user/login") || url.endsWith("/api/client/create") || url.endsWith("/api/developer/loginDev")) {
+        if (url === "/api/user/login" || url === "/api/client/create" || url === "/api/developer/loginDev") {
             return next();
         }
+
+        // Extract token
         const token = req.header('Authorization')?.replace('Bearer ', '');
         if (!token) {
             throw new TokenNotProvidedException();
         }
-        
+
+        // Verify token
         if (jwt.verify(token)) {
             const decoded = jwt.decode(token);
+
+            // Check for user
             const response = await getModelDataById('User', decoded._id, token);
             const user = response.data.data;
+
+            // Check if the user is a developer
+            if (!user) {
+                response = await getModelDataById('Developer', decoded._id, token)
+                user = response.data.data
+            }
+
             if (!user.length) {
                 throw new UserNotFoundException();
             }
-            
+
             req.user = user[0].User;
             req.token = token;
-            
+
         } else {
             throw new TokenNotValidException();
         }

@@ -6,7 +6,7 @@ const routesConfig = [
         method: 'post',
         path: '/login',
         controller: LoginUser,
-        middleware: [],
+        middlewares: [],
         inputSchema: {
             key: 'LoginAPI',
             version: '1'

@@ -6,7 +6,7 @@ const routesConfig = [
         method: 'post',
         path: '/loginDev',
         controller: LoginDeveloper,
-        middleware: [],
+        middlewares: [],
         inputSchema: {
             key: 'LoginDeveloperAPI',
             version: '1'
@@ -17,7 +17,7 @@ const routesConfig = [
         method: 'post',
         path: '/registerDev',
         controller: RegisterDeveloper,
-        middleware: [],
+        middlewares: [],
         inputSchema: {
             key: 'RegisterDeveloperAPI',
             version: '1'

@@ -5,7 +5,7 @@ const routesConfig = [
         method: 'get',
         path: '/manage',
         controller: healthCheckController,
-        middleware: [],
+        middlewares: [],
         inputSchema: {
             key: 'HealthCheckAPI',
             version: '1'

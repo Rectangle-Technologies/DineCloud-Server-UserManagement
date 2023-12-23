@@ -17,17 +17,16 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
             const schemaIdentifier = `${schemaKey}_${version}`;
 
             // get whole url from request
-            const fullUrl = req.originalUrl;
-            const url = fullUrl.split('?')[0];
-            if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create") || url.endsWith("/api/developer/loginDev")) {
+            const url = req.originalUrl.split('?')[0];
+            if (url === "/api/user/login" || url === "/api/user/register" || url === "/api/client/create" || url === "/api/developer/loginDev") {
                 req.user = {
                     clientCode: process.env.BASE_CLIENT_CODE
                 }
             }
-            console.log(generatedSchema[schemaIdentifier])
 
             var schemaResponse = generatedSchema[schemaIdentifier][req.user.clientCode];
 
+            // Check if schema is already generated
             if (!generatedSchema[schemaIdentifier][req.user.clientCode]) {
                 schemaResponse = (await JSONschemaCore.findOne({ key: schemaKey, version: version, clientCode: req.user.clientCode }))?.schema;
             }
@@ -38,7 +37,7 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
                 return errorResponse(res, { error: 'Schema not found' }, 404);
             }
 
-            schemaInstance = new JsonValidationEngine.ValidateSchema(data, schemaResponse.schema);
+            schemaInstance = new JsonValidationEngine.ValidateSchema(data, schemaResponse);
 
             const isValid = schemaInstance.validateData();
             const endTimestamp = new Date().getTime();
