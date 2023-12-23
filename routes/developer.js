@@ -1,17 +1,18 @@
+const { LoginDeveloper } = require("../controllers/Developer/loginDeveloper");
 const { RegisterDeveloper } = require("../controllers/Developer/registerDeveloper");
 
 const routesConfig = [
-    // {
-    //     method: 'post',
-    //     path: '/login',
-    //     controller: LoginUser,
-    //     middleware: [],
-    //     inputSchema: {
-    //         key: 'LoginAPI',
-    //         version: '1'
-    //     },
-    //     description: 'Login user'
-    // },
+    {
+        method: 'post',
+        path: '/loginDev',
+        controller: LoginDeveloper,
+        middleware: [],
+        inputSchema: {
+            key: 'LoginDeveloperAPI',
+            version: '1'
+        },
+        description: 'Login developer'
+    },
     {
         method: 'post',
         path: '/registerDev',

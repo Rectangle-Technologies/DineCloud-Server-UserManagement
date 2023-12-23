@@ -19,7 +19,7 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
             // get whole url from request
             const fullUrl = req.originalUrl;
             const url = fullUrl.split('?')[0];
-            if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create")) {
+            if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create") || url.endsWith("/api/developer/loginDev")) {
                 req.user = {
                     clientCode: process.env.BASE_CLIENT_CODE
                 }
