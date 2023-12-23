@@ -109,6 +109,7 @@ const startServer = async () => {
         const port = process.env.PORT || 3000;
         app.listen(port, () => {
             console.log(`Listening to port ${port}`);
+            console.log(table.toString());
             const endTimestamp = new Date().getTime();
             const timeTaken = endTimestamp - startTimestamp;
             console.log(`Time taken to start server: ${timeTaken} ms`);
