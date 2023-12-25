@@ -34,7 +34,6 @@ const VerifyUserToken = async (req, res) => {
 
     } catch (error) {
         // responding with unauthorized error
-        console.log(error);
         errorResponse(res, "Unauthorised", error.statusCode);
     }
 }

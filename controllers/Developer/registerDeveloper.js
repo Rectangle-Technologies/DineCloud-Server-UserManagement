@@ -14,7 +14,6 @@ const RegisterDeveloper = async (req, res) => {
     try {
         const response = await saveDataByModel("Developer", req.body, req.headers.authorization)
 
-        console.log(response.data?.data[0].Developer);
 
         if (response.data?.data[0].Developer) {
             const token = jwt.sign({ _id: response.data?.data[0].Developer._id, email: response.data?.data[0].Developer.developerEmail }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);

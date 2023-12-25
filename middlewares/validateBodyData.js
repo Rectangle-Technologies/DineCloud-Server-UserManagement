@@ -50,7 +50,6 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
 
             return errorResponse(res, { schemaValidationResponse: isValid ? true : schemaInstance.errors, startTimestamp, endTimestamp, timeTaken }, 400);
         } catch (err) {
-            console.log(err);
             return errorResponse(res, 'Internal server error', 500);
         }
     }

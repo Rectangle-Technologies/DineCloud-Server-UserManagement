@@ -37,11 +37,6 @@ const getModelDataByFilter = async (modelName, filter, token, headers = {}) => {
     const domainModelBaseUrl = process.env.DINECLOUD_DOMAINMODEL_SERVER_URL;
     const url = `${domainModelBaseUrl}${urls.domainModel.getModelDataByFilter}`;
     
-    console.log({
-        "Authorization": `${token}`,
-        "Content-Type": "application/json",
-        ...headers
-    })
     return axios.post(url, {
         [modelName]: filter
     }, {
