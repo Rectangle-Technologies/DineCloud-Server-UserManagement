@@ -8,7 +8,7 @@ const createNewClient = async (req, res) => {
     data.code = generateClientCode().toUpperCase();
 
     try {
-        const clientCheck = Client.findOne({ name: data.name });
+        const clientCheck = await Client.findOne({ name: data.name });
         if (clientCheck) {
             throw new Error("Client already exists");
         }

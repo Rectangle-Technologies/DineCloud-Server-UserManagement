@@ -1,39 +1,47 @@
 // importing libraries
 const { successResponse, errorResponse } = require('../utils/response');
 const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
-const User = require('../models/User');
 const { TokenNotProvidedException, TokenNotValidException } = require('../exceptions/Base');
 const { UserNotFoundException } = require('../exceptions/UserException');
+const { getModelDataById } = require('../utils/interServerComms');
 
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
         // get whole url from request
-        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-        const url = fullUrl.split('?')[0];
+        const url = req.originalUrl.split('?')[0];
 
         // by pass authentication for login/register routes
-        if (url.endsWith("/api/user/login") || url.endsWith("/api/user/register") || url.endsWith("/api/client/create")) {
+        if (url === "/api/user/login" || url === "/api/client/create" || url === "/api/developer/loginDev") {
             return next();
         }
-        
+
+        // Extract token
         const token = req.header('Authorization')?.replace('Bearer ', '');
-        
         if (!token) {
             throw new TokenNotProvidedException();
         }
-        
+
+        // Verify token
         if (jwt.verify(token)) {
             const decoded = jwt.decode(token);
-            
-            const user = await User.findById(decoded?._id)
-            
-            if (user == null || user == undefined || user == '') {
+
+            // Check for user
+            const response = await getModelDataById('User', decoded._id, token);
+            const user = response.data.data;
+
+            // Check if the user is a developer
+            if (!user) {
+                response = await getModelDataById('Developer', decoded._id, token)
+                user = response.data.data
+            }
+
+            if (!user.length) {
                 throw new UserNotFoundException();
             }
-            
-            req.user = user;
+
+            req.user = user[0].User;
             req.token = token;
-            
+
         } else {
             throw new TokenNotValidException();
         }

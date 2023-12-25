@@ -1,15 +1,19 @@
 const routers = [
     {
-        path: '/api/healthCheck',
+        path: '/healthCheck',
         router: require('./routes/healthCheck')
     },
     {
-        path: '/api/user',
+        path: '/user',
         router: require('./routes/user')
     },
     {
-        path: '/api/client',
+        path: '/client',
         router: require('./routes/client')
+    },
+    {
+        path: "/developer",
+        router: require("./routes/developer")
     }
 ];
 
