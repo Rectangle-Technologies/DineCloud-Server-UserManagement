@@ -5,9 +5,12 @@ const { successResponse, errorResponse } = require("../../utils/response.js");
 
 const LoginDeveloper = async (req, res) => {
     const data = req.body;
+    const headers = {
+        'Bypass-Key': process.env.BYPASS_KEY,
+    }
 
     try {
-        const response = await getModelDataByFilter("Developer", { developerEmail: data.developerEmail }, req.headers.authorization)
+        const response = await getModelDataByFilter("Developer", { developerEmail: data.developerEmail }, req.headers.authorization, headers)
 
         const developer = response.data?.data[0].Developer[0];
 
@@ -21,7 +24,7 @@ const LoginDeveloper = async (req, res) => {
         }
     }
     catch (error) {
-        return errorResponse(res, error, error.statusCode || 400);
+        return errorResponse(res, error.message, error.statusCode || 400);
     }
 };
 
