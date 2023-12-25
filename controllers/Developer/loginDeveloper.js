@@ -20,7 +20,7 @@ const LoginDeveloper = async (req, res) => {
             if (!isPasswordValid) {
                 return errorResponse(res, "Invalid password", 400);
             }
-            const token = jwt.sign({ _id: response.data?.data[0].Developer._id, email: response.data?.data[0].Developer.developerEmail }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
+            const token = jwt.sign({ _id: response.data?.data[0].Developer[0]._id, email: response.data?.data[0].Developer[0].developerEmail }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
             return successResponse(res, { result: response.data.data[0].Developer, token }, "Developer logged in successfully");
         } else {
             throw new DeveloperNotFoundException();

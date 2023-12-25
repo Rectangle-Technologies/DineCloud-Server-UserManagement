@@ -29,7 +29,8 @@ const LoginUser = async (req, res) => {
 
         successResponse(res, { user, token }, 200);
     } catch (error) {
-        errorResponse(res, error.message, error.statusCode || 400);
+        const errorObject = error?.response?.data || error;
+        errorResponse(res, errorObject, error.statusCode || 400);
     }
 };
 
