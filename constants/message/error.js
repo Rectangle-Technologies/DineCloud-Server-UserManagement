@@ -10,6 +10,7 @@ const TokenNotProvidedException = "TokenNotProvidedException";
 const TransactionNotFoundException = "TransactionNotFoundException";
 const UserAlreadyExistsError = "UserAlreadyExistsError";
 const UserNotFoundException = "UserNotFoundException";
+const DeveloperNotFoundException = "DeveloperNotFoundException";
 
 // This section contains all the exceptions messages
 const BANK_ACCOUNT_NOT_FOUND = "Bank account not found";
@@ -23,6 +24,7 @@ const TOKEN_NOT_VALID = "Token not valid";
 const TRANSACTION_NOT_FOUND = "Transaction not found";
 const USER_ALREADY_EXISTS = "User already exists";
 const USER_NOT_FOUND = "User not found";
+const DEVELOPER_NOT_FOUND = "Developer not found";
 
 module.exports = {
     BANK_ACCOUNT_NOT_FOUND,
@@ -43,8 +45,10 @@ module.exports = {
     TransactionNotFoundException,
     USER_ALREADY_EXISTS,
     USER_NOT_FOUND,
+    DEVELOPER_NOT_FOUND,
     UserAlreadyExistsError,
     UserNotFoundException,
+    DeveloperNotFoundException,
     SomethingWentWrongException,
     TOKEN_NOT_VALID,
 };

@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
 const { getModelDataByFilter } = require("../../utils/interServerComms");
 const { successResponse, errorResponse } = require("../../utils/response.js");
+const { DeveloperNotFoundException } = require("../../exceptions/UserException.js");
 
 const LoginDeveloper = async (req, res) => {
     const data = req.body;
@@ -20,7 +21,9 @@ const LoginDeveloper = async (req, res) => {
                 return errorResponse(res, "Invalid password", 400);
             }
             const token = jwt.sign({ _id: response.data?.data[0].Developer._id, email: response.data?.data[0].Developer.developerEmail }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
-            return successResponse(res, {result: response.data.data[0].Developer, token}, "Developer logged in successfully");
+            return successResponse(res, { result: response.data.data[0].Developer, token }, "Developer logged in successfully");
+        } else {
+            throw new DeveloperNotFoundException();
         }
     }
     catch (error) {

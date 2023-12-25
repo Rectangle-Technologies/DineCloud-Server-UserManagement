@@ -5,7 +5,7 @@ const routesConfig = [
         method: 'post',
         path: '/create',
         controller: createNewClient,
-        middleware: [],
+        middlewares: [],
         inputSchema: {
             key: 'CreateClientAPI',
             version: '1'
