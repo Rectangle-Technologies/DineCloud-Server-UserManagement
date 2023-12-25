@@ -8,7 +8,7 @@ pipeline {
         docker_hub_cred = "docker_hub_rect_tech"
         version = "latest"
         folder_path = "."
-        repo_url = "https://github.com/Rectangle-Technologies/DineCloud-Server-DomainModel"
+        repo_url = "https://github.com/Rectangle-Technologies/DineCloud-Server-UserManagement"
     }
     
     stages {
