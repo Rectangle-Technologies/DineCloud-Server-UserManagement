@@ -15,7 +15,7 @@ const LoginUser = async (req, res) => {
     }
 
     try {
-        const response = await getModelDataByFilter('User', { email: data?.email }, req.token, headers);
+        const response = await getModelDataByFilter('User', { email: data?.email, clientCode: data?.clientCode }, req.token, headers);
         const user = response.data.data.length ? response.data.data[0]?.User.length ? response.data.data[0].User[0] : null : null;
         if (!user) {
             throw new UserNotFoundException(INVALID_CREDENTIALS);
