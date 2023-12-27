@@ -7,8 +7,8 @@
     "start": "node index.js",
     "docker:build": "docker build -t dinecloud_server_usermanagement:latest .",
     "docker:push": "docker push rectangletechnologies/dinecloud_server_usermanagement:latest",
-    "docker:run": "docker run -d -p 6000:6000 --env-file .env --name dinecloud_server_usermanagement --memory=256m --cpus=0.5 dinecloud_server_usermanagement:latest",
-    "docker:run:prod": "docker run -d -p 6000:6000 --env-file .env --name dinecloud_server_usermanagement --memory=256m --cpus=0.5 rectangletechnologies/dinecloud_server_usermanagement:latest",
+    "docker:run": "docker run -d -p 4000:4000 --env-file .env --name dinecloud_server_usermanagement --memory=256m --cpus=0.5 dinecloud_server_usermanagement:latest",
+    "docker:run:prod": "docker run -d -p 4000:4000 --env-file .env --name dinecloud_server_usermanagement --memory=256m --cpus=0.5 rectangletechnologies/dinecloud_server_usermanagement:latest",
     "docker:tag": "docker tag dinecloud_server_usermanagement:latest rectangletechnologies/dinecloud_server_usermanagement:latest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
