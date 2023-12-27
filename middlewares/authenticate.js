@@ -42,7 +42,8 @@ const authenticateUserMiddleware = async (req, res, next) => {
         next();
     } catch (error) {
         // responding with unauthorized error
-        errorResponse(res, error.message, error.statusCode);
+        const errorObject = error?.response?.data || error
+        errorResponse(res, errorObject, error.statusCode);
     }
 }
 

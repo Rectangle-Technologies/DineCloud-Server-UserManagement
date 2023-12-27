@@ -34,7 +34,7 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
             const data = req.body;
 
             if (!schemaResponse) {
-                return errorResponse(res, { error: 'Schema not found' }, 404);
+                return errorResponse(res, { error: 'Validation schema not found' }, 404);
             }
 
             schemaInstance = new JsonValidationEngine.ValidateSchema(data, schemaResponse);
@@ -50,7 +50,8 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
 
             return errorResponse(res, { schemaValidationResponse: isValid ? true : schemaInstance.errors, startTimestamp, endTimestamp, timeTaken }, 400);
         } catch (err) {
-            return errorResponse(res, 'Internal server error', 500);
+            const errorObject = err?.response?.data || err;
+            return errorResponse(res, errorObject, err.statusCode || 500);
         }
     }
     return ValidationFunction;
