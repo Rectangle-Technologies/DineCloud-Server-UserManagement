@@ -10,7 +10,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
         // get whole url from request
         const url = req.originalUrl.split('?')[0];
         // by pass authentication for login/register routes
-        if (url === "/api/user/login" || url === "/api/client/create" || url === "/api/developer/loginDev") {
+        if (url === "/api/user/login" || url === "/api/client/create" || url === "/api/user/register") {
             return next();
         }
 
@@ -25,6 +25,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
             const decoded = jwt.decode(token);
 
             // Check for user
+<<<<<<< HEAD
             var response = await getModelDataById('User', decoded._id, token);
             const users = response.data.data[0].User;
             if (users.length) {
@@ -38,6 +39,12 @@ const authenticateUserMiddleware = async (req, res, next) => {
             response = await getModelDataById('Developer', decoded._id, token)
             const developers = response.data.data[0].Developer;
             if (!developers.length) {
+=======
+            const response = await getModelDataById('User', decoded._id, token);
+            const user = response.data.data;
+
+            if (!user.length) {
+>>>>>>> 793710401145f669769a8d57f64d6bec0c7ab2f1
                 throw new UserNotFoundException();
             }
             req.user = developers[0];
