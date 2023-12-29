@@ -11,7 +11,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
         const url = req.originalUrl.split('?')[0];
 
         // by pass authentication for login/register routes
-        if (url === "/api/user/login" || url === "/api/client/create" || url === "/api/developer/loginDev") {
+        if (url === "/api/user/login" || url === "/api/client/create" || url === "/api/user/register") {
             return next();
         }
 
@@ -29,12 +29,6 @@ const authenticateUserMiddleware = async (req, res, next) => {
             const response = await getModelDataById('User', decoded._id, token);
             const user = response.data.data;
 
-            // Check if the user is a developer
-            if (!user) {
-                response = await getModelDataById('Developer', decoded._id, token)
-                user = response.data.data
-            }
-
             if (!user.length) {
                 throw new UserNotFoundException();
             }
@@ -48,7 +42,8 @@ const authenticateUserMiddleware = async (req, res, next) => {
         next();
     } catch (error) {
         // responding with unauthorized error
-        errorResponse(res, error.message, error.statusCode);
+        const errorObject = error?.response?.data || error
+        errorResponse(res, errorObject, error.statusCode);
     }
 }
 

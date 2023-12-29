@@ -9,15 +9,6 @@ class UserNotFoundException extends Error {
     }
 }
 
-class DeveloperNotFoundException extends Error {
-    constructor(message) {
-        super(message);
-        this.name = error.DeveloperNotFoundException;
-        this.message = message || error.DEVELOPER_NOT_FOUND;
-        this.statusCode = 404;
-    }
-}
-
 class EmailIsRequiredException extends Error {
     constructor(message) {
         super(message);
@@ -71,5 +62,4 @@ module.exports = {
     EmailIsNotValidException,
     PasswordIsRequiredException,
     UnauthorisedException,
-    DeveloperNotFoundException
 };
