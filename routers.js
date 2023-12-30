@@ -10,6 +10,10 @@ const routers = [
     {
         path: '/client',
         router: require('./routes/client')
+    },
+    {
+        path: '/branch',
+        router: require('./routes/branch')
     }
 ];
 

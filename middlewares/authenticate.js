@@ -33,7 +33,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
                 throw new UserNotFoundException();
             }
 
-            req.user = user[0].User;
+            req.user = user[0].User[0];
             req.token = token;
 
         } else {

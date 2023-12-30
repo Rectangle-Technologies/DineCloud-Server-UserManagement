@@ -9,7 +9,8 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
         try {
             // get api endpoint
             const startTimestamp = new Date().getTime();
-            const apiEndpoint = req.originalUrl.split('/')[req.originalUrl.split('/').length - 1];
+            var apiEndpoint = req.originalUrl.split('/')[req.originalUrl.split('/').length - 1];
+            apiEndpoint = apiEndpoint.split('?')[0];
 
             const schemaKey = generateRoutes[`/${apiEndpoint}`].inputSchema.key;
             const version = generateRoutes[`/${apiEndpoint}`].inputSchema.version;
