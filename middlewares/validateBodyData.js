@@ -21,7 +21,7 @@ const validateSchemaMiddleware = (generatedSchema, generateRoutes) => {
             const url = req.originalUrl.split('?')[0];
             if (url === "/api/user/login" || url === "/api/user/register" || url === "/api/client/create") {
                 req.user = {
-                    clientCode: process.env.BASE_CLIENT_CODE
+                    clientCode: req.body.clientCode || process.env.BASE_CLIENT_CODE
                 }
             }
 
