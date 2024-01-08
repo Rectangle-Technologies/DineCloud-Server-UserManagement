@@ -1,9 +1,13 @@
+const { generateBranchCode } = require("../../utils/generateClientCode")
 const { saveDataByModel } = require("../../utils/interServerComms")
 const { errorResponse, successResponse } = require("../../utils/response")
 
 exports.CreateBranch = async (req, res) => {
     try {
-        const response = await saveDataByModel("Branch", req.body, req.headers.authorization)
+        const data = req.body
+        data.code = generateBranchCode().toUpperCase()
+
+        const response = await saveDataByModel("Branch", data, req.headers.authorization)
 
         successResponse(res, response.data.data, "Branch created successfully")
     } catch (error) {
