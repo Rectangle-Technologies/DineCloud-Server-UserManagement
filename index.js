@@ -58,7 +58,7 @@ const checkSchema = async (route) => {
     const schemaResponse = await JSONschemaCore.findOne({ key: schemaKey, version: version });
 
     if (!generatedSchema[schemaIdentifier]) {
-        generatedSchema[schemaIdentifier] = schemaResponse.schema;
+        generatedSchema[schemaIdentifier] = schemaResponse?.schema;
     }
 
     if (!schemaResponse) {

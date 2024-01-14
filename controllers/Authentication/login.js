@@ -12,17 +12,19 @@ const LoginUser = async (req, res) => {
     const data = req.body;
     const headers = {
         'Bypass-Key': process.env.BYPASS_KEY,
+        'Client-Code': data?.clientCode
     }
 
     try {
-        const response = await getModelDataByFilter('User', { email: data?.email, clientCode: data?.clientCode }, req.token, headers);
+        const loginToken = jwt.sign({ isAdmin: true })
+        const response = await getModelDataByFilter('User', { email: data?.email, clientCode: data?.clientCode }, loginToken, headers);
         const user = response.data.data.length ? response.data.data[0]?.User.length ? response.data.data[0].User[0] : null : null;
         if (!user) {
-            throw new UserNotFoundException(INVALID_CREDENTIALS);
+            throw new UserNotFoundException();
         }
         const isPasswordCorrect = await bcrypt.compare(data?.password, user?.hashedPassword);
         if (!isPasswordCorrect) {
-            throw new InvalidCredentialsException(INVALID_CREDENTIALS);
+            throw new InvalidCredentialsException();
         }
         const token = jwt.sign({ _id: user._id, email: user.email, clientId: user.clientId, clientCode: user.clientCode }, process.env.AES_GCM_ENCRYPTION_KEY, process.env.JWT_TOKEN_SECRET, process.env.AES_GCM_ENCRYPTION_IV);
         user.hashedPassword = REPLACE_PASSWORD_TEXT;
