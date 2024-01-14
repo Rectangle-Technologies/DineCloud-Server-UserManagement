@@ -9,12 +9,7 @@ const successResponse = (res, data, message) => {
 };
 
 const errorResponse = (res, error, statuscode, data = {}) => {
-    return res.status(statuscode).json({
-        status: 'error',
-        message: error.message,
-        data: null,
-        error
-    });
+    return res.status(statuscode).json(error);
 };
 
 module.exports = {

@@ -43,7 +43,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
     } catch (error) {
         // responding with unauthorized error
         const errorObject = error?.response?.data || error
-        errorResponse(res, errorObject, error.statusCode);
+        errorResponse(res, errorObject, error?.response?.status || 500);
     }
 }
 
