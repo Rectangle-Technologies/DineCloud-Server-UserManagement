@@ -6,12 +6,15 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const fs = require('fs');
+const fsPromises = require('fs').promises;
 const path = require('path');
 const cors = require('cors');
 const cluster = require('cluster');
 const JSONschemaCore = require('./models/JSONschemaCore');
 const authenticateUserMiddleware = require('./middlewares/authenticate');
 const { validateSchemaMiddleware } = require('./middlewares/validateBodyData');
+const { default: axios } = require('axios');
+const { devDeveloperServerBaseUrl } = require('./constants/urls/env');
 
 // configuring dotenv
 require('dotenv').config();
@@ -94,9 +97,42 @@ const generateRouters = async (routers) => {
     }
 }
 
+// Function to set env file
+const setEnv = async () => {
+    try {
+        const loginResponse = await axios.post(`${devDeveloperServerBaseUrl}/api/developer/loginDeveloper`, {
+            email: 'samyakshah123@gmail.com',
+            password: 'samyakshah30'
+        });
+        const envResponse = await axios.post(`${devDeveloperServerBaseUrl}/api/env/getEnv`, {
+            serverName: 'userManagement',
+            serverMode: 'development'
+        }, {
+            headers: {
+                'Authorization': `Bearer ${loginResponse.data.data.token}`
+            }
+        })
+        const env = envResponse.data.data;
+        var envString = '';
+        for (var key in env) {
+            envString += `${key} = ${env[key]}\n`;
+        }
+        await fsPromises.writeFile(path.join(__dirname, '.env'), envString)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // Function to start server
 const startServer = async () => {
     try {
+        // Check if env file exists
+        const fileExists = fs.existsSync(path.join(__dirname, '.env'));
+        if (!fileExists) {
+            await setEnv();
+            return
+        }
+
         // Connecting to database
         await mongoose.connect(process.env.MONGODB_URI);
         console.log('Connected to database');
